@@ -2,38 +2,29 @@ class Solution {
 
     public String encode(List<String> strs) {
 
-        StringBuilder sb = new StringBuilder();
-        
-        for(String str : strs){
-            int strlength = str.length();
-            sb.append(strlength).append('#').append(str);
-
+        if(strs.size()==0) {
+            return Character.toString((char)258);
         }
+        String seperate = Character.toString((char)257);
+        StringBuilder sb = new StringBuilder();
+
+        for(String str:strs) {
+            sb.append(str);
+            sb.append(seperate);
+        }
+        sb.deleteCharAt(sb.length() - 1);
         return sb.toString();
+
     }
 
     public List<String> decode(String str) {
 
-        List<String> result = new ArrayList<>();
-
-        int i = 0;
-
-        while(i < str.length()){
-
-            int j = i;
-
-            while(str.charAt(j) != '#'){
-                j++;
-            }
-            int length = Integer.parseInt(str.substring(i, j));
-
-            j++;
-
-            String word = str.substring(j, j + length);
-            result.add(word);
-
-            i = j + length;
+        if(str.equals(Character.toString((char)258))) {
+            return new ArrayList();
         }
-        return result;
+        String seperate = Character.toString((char)257);
+        return Arrays.asList(str.split(seperate,-1));
+
+
     }
 }

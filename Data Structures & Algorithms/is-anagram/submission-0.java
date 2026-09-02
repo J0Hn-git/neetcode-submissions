@@ -1,19 +1,25 @@
 class Solution {
     public boolean isAnagram(String s, String t) {
-        if(s.length() != t.length()){
+        // if the length are different, they can't be anagrams.
+        if(s.length() != t.length()) {
             return false;
         }
-        int[] array = new int[26];
 
-        for(int i = 0; i < s.length(); i++){
-            array[s.charAt(i) - 'a']++;
-            array[t.charAt(i) - 'a']--;
+        // create an array to count character frequencies.
+        int[] charCounts = new int[26];
+
+        // inc count for each char in 's' and dec for each in 't'.
+        for(int i=0;i<s.length();i++) {
+            charCounts[s.charAt(i) - 'a']++;
+            charCounts[t.charAt(i) - 'a']--;
         }
-        for(int count : array){
-            if(count != 0){
+        // check if all counts are zero
+        for(int count : charCounts) {
+            if(count != 0) {
                 return false;
             }
         }
         return true;
+
     }
 }

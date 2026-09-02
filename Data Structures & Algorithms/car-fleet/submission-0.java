@@ -1,48 +1,30 @@
-
-
 class Solution {
-
-    class Car {
-        int position;
-        double time;
-
-        Car(int position, double time) {
-            this.position = position;
-            this.time = time;
-        }
-    }
-
     public int carFleet(int target, int[] position, int[] speed) {
+        
+        // create a 2d array to store the speed and distance of 
+        // each car as a pair.
 
-        int n = position.length;
-        Car[] cars = new Car[n];
-
-        // Calculate the time each car takes to reach the target
-        for (int i = 0; i < n; i++) {
-            double time = (double) (target - position[i]) / speed[i];
-            cars[i] = new Car(position[i], time);
+        int[][] pair = new int[position.length][2];
+        for(int i=0;i<position.length;i++) {
+            pair[i][0] = position[i];
+            pair[i][1] = speed[i];
         }
+        // compare the positions and order them in descending
+        // order.
 
-        // Sort cars by position in descending order
-        Arrays.sort(cars, (a, b) -> b.position - a.position);
+        Arrays.sort(pair, (a,b) -> Integer.compare(b[0], a[0]));
 
         Stack<Double> stack = new Stack<>();
+        for(int[] p : pair) {
+            stack.push((double)(target - p[0]) / p[1]);
 
-        for (Car car : cars) {
-
-            if (stack.isEmpty()) {
-                stack.push(car.time);
-            } else {
-
-                // New fleet
-                if (car.time > stack.peek()) {
-                    stack.push(car.time);
-                }
-                // Otherwise, this car joins the fleet ahead,
-                // so we do nothing.
+            if(stack.size() >= 2 && stack.peek() <= stack.get(stack.size() - 2)){
+                stack.pop();
             }
         }
-
         return stack.size();
+
+
+
     }
 }
