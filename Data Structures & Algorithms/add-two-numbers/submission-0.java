@@ -1,39 +1,34 @@
+
 class Solution {
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        
+        ListNode curr1 = l1;
+        ListNode curr2 = l2;
+
         ListNode dummy = new ListNode(0);
-        ListNode current  = dummy;
+        ListNode head = dummy;
+
         int carry = 0;
 
-        // loop as long there is node in l1 and l2.
-        while(l1 != null || l2 != null || carry != 0){
+        while(curr1 != null || curr2 != null || carry != 0) {
 
-            // get values from current nodes, use.
-            int value1 = 0;
-            int value2 = 0;
+            int val1 = (curr1 != null) ? curr1.val : 0;
+            int val2 = (curr2 != null) ? curr2.val : 0;
 
-            if(l1 != null){
-                value1 = l1.val;
-            }
-            if(l2 != null){
-                value2 = l2.val;
-            }
-            // calculate the total sum and carry.
-            int sum = value1 + value2 + carry;
+            int sum = val1 + val2 + carry;
+
             carry = sum / 10;
             int digit = sum % 10;
 
-            // create a new node with the calculated digit.
-            current.next = new ListNode(digit);
-            current = current.next;
+            head.next = new ListNode(digit);
+            head = head.next;
 
-            // move pointers forward.
-            if(l1 != null){
-                l1 = l1.next;
+            if(curr1 != null) {
+                curr1 = curr1.next;
             }
-            if(l2 != null){
-                l2 = l2.next;
+            if(curr2 != null) {
+                curr2 = curr2.next;
             }
-
         }
         return dummy.next;
     }
